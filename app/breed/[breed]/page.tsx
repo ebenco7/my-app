@@ -1,31 +1,77 @@
-"use client"
-import { useParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { AppSlider } from "@/app/APP/COMPONENTS/AppSlider";
+import { cn } from "@/lib/utils";
+import AppLinkButton from "@/app/APP/COMPONENTS/CONSTANTS/AppLinkButton";
+import { AppDataTable } from "@/app/APP/COMPONENTS/DATATABLE/AppDataTable";
+import { columns, ConvertData, DogImages } from "@/app/APP/COMPONENTS/DATATABLE/Column";
 
-function page() {
-    //The code below is a hook it can not be used anywhere else but under a function
-    const Params = useParams()
-   
-    // async permits the server to continue to load the data, it does nit block it
+function Page() {
+  const Params = useParams();
 
-    const GetData = async()=>{
+  const [ImageArray, setImageArray] = useState<string[] | null>(null);
+  const [formattedData, setFormattedData] = useState<DogImages[] | null>(null);
 
-        const Data = await fetch("https://dog.ceo/api/breed/hound/images").then((data)=>data.json()).then((data)=>{
-            console.log(data)
-        })
-        // Because this is a process will must tell it to wait
+  useEffect(() => {
+    const GetData = async () => {
+      try {
+        const response = await fetch(
+          `https://dog.ceo/api/breed/${Params.breed}/images/random/20`
+        );
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setImageArray(data.message);
+      } catch (error) {
+        console.error(error);
+        setImageArray([]);
+      }
+    };
 
+    GetData();
+  }, [Params.breed]);
 
-
+  useEffect(() => {
+    if (ImageArray) {
+      setFormattedData(ConvertData(ImageArray));
     }
+  }, [ImageArray]);
 
-    //The code below runs once at the first load, if loaded for the second time it wont run, a trigger is created to tell it to run when a certain value change.
-    useEffect(()=>{
-        alert("")
-    })
   return (
-    <div>Inside breed folder  (Params.breed)</div>
-  )
+    <div className="h-screen w-screen bg-AppTertiary CENTER">
+      <div
+        className={cn(
+          "pt-12 w-[180px] CENTER h-screen",
+          "justify-start gap-[120px] flex-col"
+        )}
+      >
+        <AppLinkButton link="/" />
+        <div>
+          {ImageArray ? (
+            <AppSlider ImageArrayList={ImageArray} />
+          ) : (
+            "Loading..."
+          )}
+        </div>
+      </div>
+
+      <div className="w-full h-full pt-12 pl-12 p-12">
+        <h1 className="text-3xl font-bold capitalize text-AppMute">
+          {Params.breed}
+        </h1>
+
+        <div className="bg-white w-full h-[400px] rounded-md">
+          {formattedData ? (
+            <AppDataTable columns={columns} data={formattedData} />
+          ) : (
+            "Loading Table"
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default page
+export default Page;

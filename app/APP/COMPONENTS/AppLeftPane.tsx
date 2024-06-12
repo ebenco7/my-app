@@ -14,7 +14,7 @@ function AppLeftPane() {
     >
       <Image src="/Logo.svg" width={50} height={70} alt="DogApp Logo" />
 
-      <div className={cn("CENTER gap-4", "flex-col")}>
+      <div className={cn('CENTER gap-4', "flex-col items-start")}>
         <AppMenuItemGroup />
       </div>
     </div>

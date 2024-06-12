@@ -8,28 +8,28 @@ const MenuItemList = [
   {
     id: 0,
     title: "Bouvier",
-    link: "/breed/Bouvier",
+    link: "/breed/bouvier",
     icon: <FaDog />,
   },
 
   {
     id: 1,
-    title: "Airedale",
-    link: "/breed/Airedale",
+    title: "Bulldog",
+    link: "/breed/bulldog",
     icon: <GiSittingDog />,
   },
 
   {
     id: 2,
     title: "Bluetick",
-    link: "/breed/Bluetick",
+    link: "/breed/bluetick",
     icon: <BiSolidDog />,
   },
 
   {
     id: 3,
-    title: "Akita",
-    link: "/breed/Akita",
+    title: "Hound",
+    link: "/breed/hound",
     icon: <GiSniffingDog />,
   },
 ];
