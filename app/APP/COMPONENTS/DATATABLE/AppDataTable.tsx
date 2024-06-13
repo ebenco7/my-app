@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
+import React, { useState } from "react";
 import {
   ColumnDef,
   flexRender,
   getPaginationRowModel,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -16,45 +16,48 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export type PaginationState = {
-  pageIndex: number
-  pageSize: number
-}
+  pageIndex: number;
+  pageSize: number;
+};
 
 export type PaginationTableState = {
-  pagination: PaginationState
-}
+  pagination: PaginationState;
+};
 
 export type PaginationInitialTableState = {
-  pagination?: Partial<PaginationState>
-}
+  pagination?: Partial<PaginationState>;
+};
 
 export function AppDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [filter, setFilter] = useState<string>("")
-  const [filteredData, setFilteredData] = useState<TData[]>(data)
+  const [filter, setFilter] = useState<string>("");
+  const [filteredData, setFilteredData] = useState<TData[]>(data);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    setFilter(value)
+    const value = event.target.value;
+    setFilter(value);
     const filtered = data.filter((item) =>
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(value.toLowerCase())
-      )
-    )
-    setFilteredData(filtered)
-  }
+      Object.values(item).some((val) => {
+        if (val !== null && val !== undefined) {
+          return String(val).toLowerCase().includes(value.toLowerCase());
+        }
+        return false;
+      })
+    );
+    setFilteredData(filtered);
+  };
 
   const table = useReactTable({
     data: filteredData,
@@ -67,11 +70,11 @@ export function AppDataTable<TData, TValue>({
         pageSize: 5,
       },
     },
-  })
+  });
 
   return (
     <div className="rounded-md border">
-      <div className="p-4">
+      <div className="p-3">
         <Input
           placeholder="Search..."
           value={filter}
@@ -93,7 +96,7 @@ export function AppDataTable<TData, TValue>({
                           header.getContext()
                         )}
                   </TableHead>
-                )
+                );
               })}
             </TableRow>
           ))}
@@ -114,7 +117,7 @@ export function AppDataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-10 text-center">
                 No results.
               </TableCell>
             </TableRow>
@@ -140,5 +143,5 @@ export function AppDataTable<TData, TValue>({
         </Button>
       </div>
     </div>
-  )
+  );
 }

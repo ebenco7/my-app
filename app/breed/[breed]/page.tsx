@@ -62,7 +62,7 @@ function Page() {
           {Params.breed}
         </h1>
 
-        <div className="bg-white w-full h-[400px] rounded-md">
+        <div className="bg-white p-2 h-[400px] w-[850px] ml-[50px] rounded-md mt-[2px] mb-60">
           {formattedData ? (
             <AppDataTable columns={columns} data={formattedData} />
           ) : (

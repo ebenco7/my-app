@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import AppMenuItemGroup from "./AppMenuItemGroup";
 import Image from "next/image";
