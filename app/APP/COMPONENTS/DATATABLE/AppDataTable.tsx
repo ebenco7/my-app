@@ -20,35 +20,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+// Constraint to ensure TData is an object with string keys and any values
+interface DataTableProps<TData extends Record<string, any>> {
+  columns: ColumnDef<TData, any>[];
   data: TData[];
 }
 
-export type PaginationState = {
-  pageIndex: number;
-  pageSize: number;
-};
-
-export type PaginationTableState = {
-  pagination: PaginationState;
-};
-
-export type PaginationInitialTableState = {
-  pagination?: Partial<PaginationState>;
-};
-
-export function AppDataTable<TData, TValue>({
+export function AppDataTable<TData extends Record<string, any>>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [filter, setFilter] = useState<string>("");
   const [filteredData, setFilteredData] = useState<TData[]>(data);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFilter(value);
-    const filtered = data.filter((item) =>
+    const filtered = data.filter((item: TData) =>
       Object.values(item).some((val) => {
         if (val !== null && val !== undefined) {
           return String(val).toLowerCase().includes(value.toLowerCase());
@@ -59,7 +47,7 @@ export function AppDataTable<TData, TValue>({
     setFilteredData(filtered);
   };
 
-  const table = useReactTable({
+  const table = useReactTable<TData>({
     data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
