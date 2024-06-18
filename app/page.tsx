@@ -21,7 +21,7 @@ function Page() {
         const data = await response.json();
 
         // Format ImageArray into DogImages format for AppDataTable
-        const formatted = data.message.slice(0, 5).map((link, index) => ({
+        const formatted = data.message.slice(0, 5).map((link: string, index: number) => ({
           id: index + 1,
           ImageLink: link,
         }));
