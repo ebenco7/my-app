@@ -24,6 +24,41 @@ const ViewLargeImage = ({ ImageLink }: { ImageLink: string }) => {
   );
 };
 
+// Component for rendering actions menu
+const ActionsMenu = ({ row }: { row: { original: DogImages } }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <IconButton onClick={handleClick}>
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <Link href={`/detail?Imageurl=${row.original.ImageLink}`}>
+            View Large Image
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>View Customer</MenuItem>
+        <MenuItem onClick={handleClose}>View Payment Details</MenuItem>
+      </Menu>
+    </>
+  );
+};
+
 const columns: ColumnDef<DogImages>[] = [
   {
     accessorKey: "id",
@@ -32,8 +67,7 @@ const columns: ColumnDef<DogImages>[] = [
   {
     id: "Avatar",
     header: "Avatar",
-    cell: ({ row }) => (
-      // Adjust styles for better image sizing
+    cell: ({ row }: { row: { original: DogImages } }) => (
       <div style={{ width: "50px", height: "50px", position: "relative", borderRadius: "50%", overflow: "hidden" }}>
         <Image
           src={row.original.ImageLink}
@@ -51,39 +85,7 @@ const columns: ColumnDef<DogImages>[] = [
   {
     id: "Actions",
     header: "Actions",
-    cell: ({ row }) => {
-      const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-      const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-      };
-
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
-
-      return (
-        <>
-          <IconButton onClick={handleClick}>
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>
-              <Link href={`/detail?Imageurl=${row.original.ImageLink}`}>
-                View Large Image
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>View Customer</MenuItem>
-            <MenuItem onClick={handleClose}>View Payment Details</MenuItem>
-          </Menu>
-        </>
-      );
-    },
+    cell: ({ row }: { row: { original: DogImages } }) => <ActionsMenu row={row} />,
   },
 ];
 
