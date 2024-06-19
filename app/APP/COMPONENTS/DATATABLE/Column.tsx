@@ -1,4 +1,3 @@
-// Ensure this pragma is at the top of your file
 "use client";
 
 import React from "react";
@@ -6,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Menu, MenuItem, IconButton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Link from "next/link";
-import Image from "next/image"; // Import Image from Next.js
+import Image from "next/image";
 import { useRouter } from "next/router";
 
 // Define the type for your data
@@ -34,14 +33,13 @@ const columns: ColumnDef<DogImages>[] = [
     id: "Avatar",
     header: "Avatar",
     cell: ({ row }) => (
-      // Replace <img> with <Image> for better optimization
-      <div style={{ width: "50px", height: "50px", borderRadius: "50%" }}>
+      // Adjust styles for better image sizing
+      <div style={{ width: "50px", height: "50px", position: "relative", borderRadius: "50%", overflow: "hidden" }}>
         <Image
           src={row.original.ImageLink}
           alt={`Dog ${row.original.id}`}
           layout="fill"
           objectFit="cover"
-          className="rounded-full"
         />
       </div>
     ),
