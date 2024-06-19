@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -33,7 +33,7 @@ export function AppDataTable<TData extends Record<string, any>>({
   const [filter, setFilter] = useState<string>("");
   const [filteredData, setFilteredData] = useState<TData[]>(data);
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFilter(value);
     const filtered = data.filter((item: TData) =>

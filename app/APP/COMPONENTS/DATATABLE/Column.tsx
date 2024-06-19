@@ -1,13 +1,15 @@
+// Ensure this pragma is at the top of your file
 "use client";
 
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Menu, MenuItem, IconButton } from "@mui/material";
-import MoreVertIcon from '@mui/icons-material/MoreVert'; // Import the kebab menu icon
-import Link from 'next/link'; // Import Link from Next.js
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Link from "next/link";
+import Image from "next/image"; // Import Image from Next.js
 import { useRouter } from "next/router";
 
-// This type is used to define the shape of our data.
+// Define the type for your data
 export type DogImages = {
   id: number;
   ImageLink: string;
@@ -16,8 +18,12 @@ export type DogImages = {
 const ViewLargeImage = ({ ImageLink }: { ImageLink: string }) => {
   const router = useRouter();
 
-  return <p onClick={() => { router.push(`/detail?Imageurl=${ImageLink}`) }}> View Large image</p>
-}
+  return (
+    <p onClick={() => router.push(`/detail?Imageurl=${ImageLink}`)}>
+      View Large image
+    </p>
+  );
+};
 
 const columns: ColumnDef<DogImages>[] = [
   {
@@ -28,11 +34,16 @@ const columns: ColumnDef<DogImages>[] = [
     id: "Avatar",
     header: "Avatar",
     cell: ({ row }) => (
-      <img
-        src={row.original.ImageLink}
-        alt={`Dog ${row.original.id}`}
-        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-      />
+      // Replace <img> with <Image> for better optimization
+      <div style={{ width: "50px", height: "50px", borderRadius: "50%" }}>
+        <Image
+          src={row.original.ImageLink}
+          alt={`Dog ${row.original.id}`}
+          layout="fill"
+          objectFit="cover"
+          className="rounded-full"
+        />
+      </div>
     ),
   },
   {
