@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+
 
 import Image from "next/image";
 import AppButton from "../APP/COMPONENTS/AppButton";
@@ -13,7 +14,7 @@ function Page() {
   const Imageurl = Qparams.get("Imageurl");
 
   return (
-   <React.Suspense fallback={ <div>Loading...</div> }>
+   <Suspense fallback={ <div>Loading...</div> }>
     <div className="h-screen w-screen bg-AppTertiary CENTER">
       <div
         className={cn(
@@ -44,7 +45,7 @@ function Page() {
         )}
       </div>
     </div>
-   </React.Suspense>
+   </Suspense>
    
       
   );
