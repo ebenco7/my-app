@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Menu, MenuItem, IconButton } from "@mui/material";
@@ -14,6 +12,7 @@ export type DogImages = {
   ImageLink: string;
 };
 
+// View Large Image component
 const ViewLargeImage = ({ ImageLink }: { ImageLink: string }) => {
   const router = useRouter();
 
@@ -24,7 +23,7 @@ const ViewLargeImage = ({ ImageLink }: { ImageLink: string }) => {
   );
 };
 
-// Component for rendering actions menu
+// Actions Menu component
 const ActionsMenu = ({ row }: { row: { original: DogImages } }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -59,6 +58,23 @@ const ActionsMenu = ({ row }: { row: { original: DogImages } }) => {
   );
 };
 
+// Cell component for rendering data and actions menu
+const Cell = ({ row }: { row: { original: DogImages } }) => {
+  // You can add state management here if needed for the cell itself
+
+  return (
+    <div style={{ width: "50px", height: "50px", position: "relative", borderRadius: "50%", overflow: "hidden" }}>
+      <Image
+        src={row.original.ImageLink}
+        alt={`Dog ${row.original.id}`}
+        layout="fill"
+        objectFit="cover"
+      />
+    </div>
+  );
+};
+
+// Define table columns
 const columns: ColumnDef<DogImages>[] = [
   {
     accessorKey: "id",
@@ -67,16 +83,7 @@ const columns: ColumnDef<DogImages>[] = [
   {
     id: "Avatar",
     header: "Avatar",
-    cell: ({ row }: { row: { original: DogImages } }) => (
-      <div style={{ width: "50px", height: "50px", position: "relative", borderRadius: "50%", overflow: "hidden" }}>
-        <Image
-          src={row.original.ImageLink}
-          alt={`Dog ${row.original.id}`}
-          layout="fill"
-          objectFit="cover"
-        />
-      </div>
-    ),
+    cell: ({ row }: { row: { original: DogImages } }) => <Cell row={row} />,
   },
   {
     accessorKey: "ImageLink",
@@ -89,6 +96,7 @@ const columns: ColumnDef<DogImages>[] = [
   },
 ];
 
+// Function to convert image array to DogImages object array
 const ConvertData = (ImageArray: string[]): DogImages[] => {
   return ImageArray.map((link, index) => ({
     id: index + 1,
