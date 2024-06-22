@@ -1,3 +1,5 @@
+"use client"; // Ensure this pragma is at the top of your file
+
 import React, { useEffect, useState } from "react";
 import AppLeftPane from "./APP/COMPONENTS/AppLeftPane";
 import { cn } from "@/lib/utils";
@@ -24,9 +26,9 @@ function Page() {
           ImageLink: link,
         }));
 
-        // Ensure at least 5 rows in the table with a placeholder image
+        // Ensure at least 5 rows in the table
         while (formatted.length < 5) {
-          formatted.push({ id: formatted.length + 1, ImageLink: "https://via.placeholder.com/150" });
+          formatted.push({ id: formatted.length + 1, ImageLink: "" }); // Replace empty string with placeholder or default image link
         }
 
         setFormattedData(formatted);
@@ -42,7 +44,7 @@ function Page() {
   return (
     <div className={cn("CENTER gap-1 flex-col bg-AppTertiary h-screen w-screen", "justify-start items-start flex-row")}>
       <AppLeftPane />
-
+      
       <div className="bg-white p-3 h-auto w-[850px] ml-[50px] rounded-md mt-[10px]"> {/* Adjusted padding */}
         {formattedData ? (
           <AppDataTable columns={columns} data={formattedData} />
