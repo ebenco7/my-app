@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import Image from "next/image";
 import AppButton from "../APP/COMPONENTS/AppButton";
 
 function Page() {
-  const Qparams = useSearchParams();
+  // const Qparams = useSearchParams();
   const router = useRouter(); // Corrected usage of useRouter
-  const Imageurl = Qparams.get("Imageurl");
+  const Imageurl ="";
 
   return (
     <div className="h-screen w-screen bg-AppTertiary CENTER">
