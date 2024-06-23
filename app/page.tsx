@@ -1,5 +1,6 @@
 "use client"; // Ensure this pragma is at the top of your file
 
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import AppLeftPane from "./APP/COMPONENTS/AppLeftPane";
 import { cn } from "@/lib/utils";
